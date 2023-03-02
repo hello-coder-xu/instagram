@@ -3,9 +3,11 @@
 
 ## 官方文档
 - 链接：https://developers.facebook.com/docs/instagram/sharing-to-feed
-- 按照官方文档图片一直提示【加载失败】
+- 官方代码分享图片
+  + 一直提示【加载失败】
 
 ## 这个库的好处
+- 可以正常分享图片
 - 多种方式分享
 - 图片去重
 
