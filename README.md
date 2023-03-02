@@ -1,11 +1,12 @@
 # instagram分享
 封装多种方式分享图片到instagram
 
-# 官方文档：https://developers.facebook.com/docs/instagram/sharing-to-feed
+## 官方文档
+- 链接：https://developers.facebook.com/docs/instagram/sharing-to-feed
 - 按照官方文档图片一直提示【加载失败】
 
 
-# 分享图片方式
+## 分享图片方式
 - 网络图片
 ```
 /// 网络图片
