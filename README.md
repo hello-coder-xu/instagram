@@ -5,7 +5,7 @@
 - 链接：https://developers.facebook.com/docs/instagram/sharing-to-feed
 - 按照官方文档图片一直提示【加载失败】
 
-## 好处
+## 这个库的好处
 - 多种方式分享
 - 图片去重
 
