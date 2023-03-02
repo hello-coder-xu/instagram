@@ -107,7 +107,7 @@ class InstagramShare {
         context: Context,
         networkImageUrl: String,
         imageName: String,
-        imageLoadStatus: ImageLoadStatus,
+        imageLoadStatus: ImageLoadStatus?,
     ) {
         if (!imageName.endsWith(".png")) {
             Log.e("instagram", "分享网络图片 错误:图片后缀不是.png")
@@ -124,17 +124,17 @@ class InstagramShare {
             // 1，下载再插入到媒体中去
             // 2，分享到instagram
             Log.d("instagram", "分享网络图片 开始下载")
-            imageLoadStatus.loading()
+            imageLoadStatus?.loading()
             checkPermissionAndDownloadImage(context, networkImageUrl) { bitmap ->
                 if (bitmap != null) {
                     Log.d("instagram", "分享网络图片 下载成功")
-                    imageLoadStatus.loadSuccess()
+                    imageLoadStatus?.loadSuccess()
                     val tempUri: Uri? = insertBitmapToMedia(context, bitmap, imageName)
                     // 分享到instagram
                     if (tempUri != null) shareToInstagram(context, tempUri)
                 } else {
                     Log.d("instagram", "分享网络图片 下载失败")
-                    imageLoadStatus.loadFail()
+                    imageLoadStatus?.loadFail()
                 }
             }
         }
