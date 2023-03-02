@@ -72,7 +72,6 @@ class InstagramShare {
             return
         }
         val imageName = "${localFilePath.hashCode()}.png"
-        println("test localFilePath=$localFilePath imageName=$imageName")
         // 检查媒体中是否存在图片
         val uri = getMediaStoreUri(context, imageName)
         if (uri == null) {
@@ -106,6 +105,7 @@ class InstagramShare {
         context: Context,
         networkImageUrl: String,
         imageLoadStatus: ImageLoadStatus?,
+        requestCode: Int = 100
     ) {
         if (networkImageUrl.isEmpty()) {
             Log.e("instagram", "分享网络图片 链接不能为空")
@@ -122,20 +122,25 @@ class InstagramShare {
             // 不存在：
             // 1，下载再插入到媒体中去
             // 2，分享到instagram
-            Log.d("instagram", "分享网络图片 开始下载")
-            imageLoadStatus?.loading()
-            checkPermissionAndDownloadImage(context, networkImageUrl) { bitmap ->
-                if (bitmap != null) {
-                    Log.d("instagram", "分享网络图片 下载成功")
-                    imageLoadStatus?.loadSuccess()
-                    val tempUri: Uri? = insertBitmapToMedia(context, bitmap, imageName)
-                    // 分享到instagram
-                    if (tempUri != null) shareToInstagram(context, tempUri)
-                } else {
-                    Log.d("instagram", "分享网络图片 下载失败")
-                    imageLoadStatus?.loadFail()
+            Log.d("instagram", "分享网络图片 权限检查")
+            val hasPermission = checkPermission(context, requestCode)
+            if (hasPermission) {
+                Log.d("instagram", "分享网络图片 开始下载")
+                imageLoadStatus?.loading()
+                loadImage(networkImageUrl) { bitmap ->
+                    if (bitmap != null) {
+                        Log.d("instagram", "分享网络图片 下载成功")
+                        imageLoadStatus?.loadSuccess()
+                        val tempUri: Uri? = insertBitmapToMedia(context, bitmap, imageName)
+                        // 分享到instagram
+                        if (tempUri != null) shareToInstagram(context, tempUri)
+                    } else {
+                        Log.d("instagram", "分享网络图片 下载失败")
+                        imageLoadStatus?.loadFail()
+                    }
                 }
             }
+
         }
     }
 
@@ -220,11 +225,7 @@ class InstagramShare {
      * @fileName 图片名称
      * @callback 下载结果回调
      */
-    private fun checkPermissionAndDownloadImage(
-        context: Context,
-        downloadUrl: String,
-        imageNetworkLoadResult: ImageNetworkLoadResult
-    ) {
+    private fun checkPermission(context: Context, requestCode: Int = 100): Boolean {
         val hasWritePermission = ContextCompat.checkSelfPermission(
             context,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -235,10 +236,22 @@ class InstagramShare {
             ActivityCompat.requestPermissions(
                 context as Activity,
                 arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                100
+                requestCode
             )
+            Log.d("instagram", "分享网络图片 无写入权限")
+            return false
         }
-        // 有权限
+        Log.d("instagram", "分享网络图片 有写入权限")
+        return true
+    }
+
+    /**
+     * 下载图片
+     */
+    private fun loadImage(
+        downloadUrl: String,
+        imageNetworkLoadResult: ImageNetworkLoadResult
+    ) {
         object : Thread() {
             override fun run() {
                 // 下载图片
@@ -248,7 +261,6 @@ class InstagramShare {
             }
         }.start()
     }
-
 
     /**
      * 保存Bitmap到相册

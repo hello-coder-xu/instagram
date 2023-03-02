@@ -7,13 +7,22 @@
   + 一直提示【加载失败】
 
 ## 这个库的好处
-- 可以正常分享图片
+- 正常分享图片
 - 多种方式分享
 - 图片去重
 
+## 注意权限
+- 网络图片分享需要网络权限
+- 
+```
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+```
+
 ## 分享图片方式
 - 网络图片
-```
+```kotlin
 /// 网络图片
 val networkImageUrl ="https://img2.591.com.tw/house/2022/07/06/165709842179541103.jpg!900x.water3.jpg"
 InstagramShare.get().shareNetwork(context,
@@ -35,7 +44,7 @@ InstagramShare.get().shareNetwork(context,
 ```
 - 本地图片
   +  localFilePath：手机本地图片完整路径
-```
+```kotlin
 // 本地图片
 val fileName = "instagram.png"
 val folder = context.resources.getString(R.string.app_name)
@@ -45,19 +54,19 @@ val mediaFileName = "localFile.png"
 InstagramShare.get().shareLocalFile(context, localFilePath, mediaFileName)
 ```
 - 资源图片
-```
+```kotlin
  // 资源图片
  InstagramShare.get().shareResource(context, R.drawable.instagram1, "instagram1.png")
 ```
 - 媒体中的图片
-```
+```kotlin
 // 媒体图片
 InstagramShare.get().shareMediaFile(context, "instagram1.png")
 ```
 
 
 - 核心类
-```
+```kotlin
 package com.example.instagram
 
 import android.Manifest
