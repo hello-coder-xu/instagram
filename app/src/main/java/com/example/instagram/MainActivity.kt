@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
                 "https://img2.591.com.tw/house/2022/07/06/165709842179541103.jpg!900x.water3.jpg"
             InstagramShare.get().shareNetwork(context,
                 networkImageUrl,
-                "test.png",
                 object : ImageLoadStatus {
                     override fun loading() {
 
@@ -41,21 +40,20 @@ class MainActivity : AppCompatActivity() {
         }
         shareResourceImage.setOnClickListener {
             // 资源图片
-            InstagramShare.get().shareResource(context, R.drawable.instagram1, "instagram1.png")
+            InstagramShare.get().shareResource(context, R.drawable.instagram1)
         }
         shareMediaImage.setOnClickListener {
             // 媒体图片
-            InstagramShare.get().shareMediaFile(context, "instagram1.png")
+            InstagramShare.get().shareMediaFile(context, "2131165296.png")
         }
         shareLocalImage.setOnClickListener {
             // 本地图片
-            val fileName = "instagram.png"
+            val fileName = "instagram1.png"
             val folder = context.resources.getString(R.string.app_name)
             val externalCacheDirPath = externalCacheDir?.absoluteFile?.path
             val localFilePath =
                 externalCacheDirPath + File.separator + folder + File.separator + fileName
-            val mediaFileName = "localFile.png"
-            InstagramShare.get().shareLocalFile(context, localFilePath, mediaFileName)
+            InstagramShare.get().shareLocalFile(context, localFilePath)
         }
     }
 

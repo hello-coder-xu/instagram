@@ -65,15 +65,16 @@ class InstagramShare {
      * 分享本地《非媒体》图片
      * 注意：本地图片需要插入到媒体中才能分享
      * @localFilePath 本地图片完整路径
-     * @mediaFileName 媒体对应图片名字 《需要有后缀》
      */
-    fun shareLocalFile(context: Context, localFilePath: String, mediaFileName: String) {
-        if (!mediaFileName.endsWith(".png")) {
-            Log.e("instagram", "分享本地图片 错误:图片后缀不是.png")
+    fun shareLocalFile(context: Context, localFilePath: String) {
+        if (localFilePath.isEmpty()) {
+            Log.e("instagram", "分享本地图片 地址不能为空")
             return
         }
+        val imageName = "${localFilePath.hashCode()}.png"
+        println("test localFilePath=$localFilePath imageName=$imageName")
         // 检查媒体中是否存在图片
-        val uri = getMediaStoreUri(context, mediaFileName)
+        val uri = getMediaStoreUri(context, imageName)
         if (uri == null) {
             // 不存在:把文件转换成bitmap
             val file = File(localFilePath)
@@ -84,7 +85,7 @@ class InstagramShare {
             Log.d("instagram", "分享本地图片 图片转bitmap")
             val bitmap = BitmapFactory.decodeFile(localFilePath)
             // 插入到media中去
-            val tempUri: Uri? = insertBitmapToMedia(context, bitmap, mediaFileName)
+            val tempUri: Uri? = insertBitmapToMedia(context, bitmap, imageName)
             // 分享到instagram
             if (tempUri != null) shareToInstagram(context, tempUri)
         } else {
@@ -99,20 +100,18 @@ class InstagramShare {
      * 1，网络图片需要下载到本地
      * 2，本地图片插入到媒体中才能分享
      * @networkImageUrl 网络图片链接
-     * @imageName 图片名  《需要有后缀》
-     * @mediaFolderName 媒体对应目录
-     *
+     * @imageLoadStatus 状态回调
      */
     fun shareNetwork(
         context: Context,
         networkImageUrl: String,
-        imageName: String,
         imageLoadStatus: ImageLoadStatus?,
     ) {
-        if (!imageName.endsWith(".png")) {
-            Log.e("instagram", "分享网络图片 错误:图片后缀不是.png")
+        if (networkImageUrl.isEmpty()) {
+            Log.e("instagram", "分享网络图片 链接不能为空")
             return
         }
+        val imageName = "${networkImageUrl.hashCode()}.png"
         // 判断媒体是否存在图片
         val uri = getMediaStoreUri(context, imageName)
         if (uri != null) {
@@ -143,11 +142,8 @@ class InstagramShare {
     /**
      * 分享资源图片
      */
-    fun shareResource(context: Context, drawable: Int, imageName: String) {
-        if (!imageName.endsWith(".png")) {
-            Log.e("instagram", "分享资源图片 错误:图片后缀不是.png")
-            return
-        }
+    fun shareResource(context: Context, drawable: Int) {
+        val imageName = "$drawable.png"
         var uri = getMediaStoreUri(context, imageName)
         if (uri == null) {
             Log.d("instagram", "分享资源图片 本地未找到")
