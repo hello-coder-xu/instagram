@@ -1,8 +1,9 @@
 # instagram分享
 封装多种方式分享图片到instagram
 
-官方文档：https://developers.facebook.com/docs/instagram/sharing-to-feed
+# 官方文档：https://developers.facebook.com/docs/instagram/sharing-to-feed
 - 按照官方文档图片一直提示【加载失败】
+
 
 # 分享图片方式
 - 网络图片
@@ -27,6 +28,7 @@ InstagramShare.get().shareNetwork(context,
                 })
 ```
 - 本地图片
+  +  localFilePath：手机本地图片完整路径
 ```
 // 本地图片
 val fileName = "instagram.png"
