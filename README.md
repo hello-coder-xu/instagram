@@ -1,12 +1,15 @@
 # instagram分享
 封装多种方式分享图片到instagram
 
+官方文档：https://developers.facebook.com/docs/instagram/sharing-to-feed
+- 按照官方文档图片一直提示【加载失败】
+
 # 分享图片方式
 - 网络图片
 ```
-  /// 网络图片
-  val networkImageUrl ="https://img2.591.com.tw/house/2022/07/06/165709842179541103.jpg!900x.water3.jpg"
-  InstagramShare.get().shareNetwork(context,
+/// 网络图片
+val networkImageUrl ="https://img2.591.com.tw/house/2022/07/06/165709842179541103.jpg!900x.water3.jpg"
+InstagramShare.get().shareNetwork(context,
                 networkImageUrl,
                 "test.png",
                 object : ImageLoadStatus {

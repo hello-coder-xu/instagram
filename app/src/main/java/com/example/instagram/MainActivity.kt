@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         val shareResourceImage: Button = findViewById(R.id.share_resource_image)
         val shareMediaImage: Button = findViewById(R.id.share_media_image)
         shareNetworkImage.setOnClickListener {
+            /// 网络图片
             val networkImageUrl =
                 "https://img2.591.com.tw/house/2022/07/06/165709842179541103.jpg!900x.water3.jpg"
             InstagramShare.get().shareNetwork(context,
