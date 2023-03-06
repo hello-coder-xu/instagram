@@ -1,6 +1,6 @@
 package com.example.instagram
 
-import android.content.*
+import android.content.Context
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -26,16 +26,17 @@ class MainActivity : AppCompatActivity() {
                 networkImageUrl,
                 object : ImageLoadStatus {
                     override fun loading() {
-
+                        TODO("Not yet implemented")
                     }
 
-                    override fun loadSuccess() {
-
+                    override fun loadResult(result: Boolean) {
+                        TODO("Not yet implemented")
                     }
 
-                    override fun loadFail() {
-
+                    override fun openShareResult(result: Boolean) {
+                        TODO("Not yet implemented")
                     }
+
                 })
         }
         shareResourceImage.setOnClickListener {
