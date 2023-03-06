@@ -6,6 +6,5 @@ public interface ImageLoadStatus {
 
     void loadResult(boolean result);
 
-
     void openShareResult(boolean result);
 }

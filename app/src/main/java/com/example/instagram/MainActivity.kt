@@ -26,15 +26,15 @@ class MainActivity : AppCompatActivity() {
                 networkImageUrl,
                 object : ImageLoadStatus {
                     override fun loading() {
-                        TODO("Not yet implemented")
+                        println("instagram 图片加载中")
                     }
 
                     override fun loadResult(result: Boolean) {
-                        TODO("Not yet implemented")
+                        println("instagram 图片加载结果：$result")
                     }
 
                     override fun openShareResult(result: Boolean) {
-                        TODO("Not yet implemented")
+                        println("instagram 图片打开分享结果：$result")
                     }
 
                 })
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
         shareMediaImage.setOnClickListener {
             // 媒体图片
-            InstagramShare.get().shareMediaFile(context, "2131165296.png")
+            InstagramShare.get().shareMediaFile(context, "instagram_share_2131165296.png")
         }
         shareLocalImage.setOnClickListener {
             // 本地图片
@@ -57,5 +57,4 @@ class MainActivity : AppCompatActivity() {
             InstagramShare.get().shareLocalFile(context, localFilePath)
         }
     }
-
 }
