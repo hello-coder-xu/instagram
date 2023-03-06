@@ -4,7 +4,8 @@ public interface ImageLoadStatus {
 
     void loading();
 
-    void loadSuccess();
+    void loadResult(boolean result);
 
-    void loadFail();
+
+    void openShareResult(boolean result);
 }

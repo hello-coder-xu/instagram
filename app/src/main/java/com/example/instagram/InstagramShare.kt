@@ -118,6 +118,7 @@ class InstagramShare {
             Log.d("instagram", "分享网络图片 已找到图片")
             // 存在：直接分享
             shareToInstagram(context, uri)
+            imageLoadStatus?.openShareResult(true)
         } else {
             // 不存在：
             // 1，下载再插入到媒体中去
@@ -130,17 +131,21 @@ class InstagramShare {
                 loadImage(networkImageUrl) { bitmap ->
                     if (bitmap != null) {
                         Log.d("instagram", "分享网络图片 下载成功")
-                        imageLoadStatus?.loadSuccess()
+                        imageLoadStatus?.loadResult(true)
                         val tempUri: Uri? = insertBitmapToMedia(context, bitmap, imageName)
                         // 分享到instagram
-                        if (tempUri != null) shareToInstagram(context, tempUri)
+                        if (tempUri != null) {
+                            shareToInstagram(context, tempUri)
+                            imageLoadStatus?.openShareResult(true)
+                        } else {
+                            imageLoadStatus?.openShareResult(false)
+                        }
                     } else {
                         Log.d("instagram", "分享网络图片 下载失败")
-                        imageLoadStatus?.loadFail()
+                        imageLoadStatus?.loadResult(false)
                     }
                 }
             }
-
         }
     }
 
